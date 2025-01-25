@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My Spring App</title>
+
+</head>
+
+<body>
+	<section>
+		<div class="container p-5 mt-3">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="card card-sh">
+						<div class="card-header text-center">
+							<p class="fs-4">Add Product</p>
+							<th:block th:if="${session.succMsg}">
+								<p class="text-success fw-bold">[[${session.succMsg}]]</p>
+								<th:block th:text="${@commonServiceImp.removeSession()}"></th:block>
+							</th:block>
+							<th:block th:if="${session.errorMsg}">
+								<p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
+								<th:block th:text="${@commonServiceImp.removeSession()}"></th:block>
+							</th:block>
+						</div>
+						<div class="card-body">
+							<form action="/admin/saveProduct" method="post" enctype="multipart/form-data">
+								<div class="mb-3">
+									<label>Enter Title</label>
+									<input type="text" name="title" class="form-control">
+								</div>
+								<div class="mb-3">
+									<label>Enter Description</label>
+									<textarea rows="3" class="form-control" name="description"></textarea>
+								</div>
+								<div class="mb-3">
+									<label>Category</label>
+									<select class="form-control" name="category">
+										<option>--select--</option>
+										<option th:each="c:${categories}">[[${c.name}]]</option>
+									</select>
+								</div>
+								<div class="row">
+									<div class="col mb-3">
+										<label for="price">Enter Price</label>
+										<input type="number" id="price" name="price" class="form-control"
+											placeholder="Enter price">
+									</div>
+									<div class="col mb-3">
+										<label for="discount">Enter Discount %</label>
+										<input type="number" id="discount" name="discount" class="form-control"
+											placeholder="Enter discount percentage">
+									</div>
+									<div class="col mb-3">
+										<label for="discountedAmount">Discounted Amount</label>
+										<input type="text" id="discountedAmount" class="form-control" readonly>
+									</div>
+								</div>
+								<div class="mb-3">
+									<label>Status</label>
+
+									<div class="form-check">
+										<input class="form-check-input" type="radio" checked value="true"
+											name="isActive" id="flexRadioDefault1">
+										<label class="form-check-label" for="flexRadioDefault1">
+											Active </label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="isActive" value="false"
+											id="flexRadioDefault2"> <label class="form-check-label"
+											for="flexRadioDefault2">
+											Inactive </label>
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col mb-3">
+										<label>Enter Stock</label>
+										<input type="text" name="stock" class="form-control">
+									</div>
+									<div class="col mb-3">
+										<label>Upload Image</label>
+										<input type="file" name="file" class="form-control">
+									</div>
+								</div>
+								<button class="btn btn-primary col-md-12">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			//console.log("Price: " + 0, "Discount: " + 0);
+			// Function to calculate discounted amount
+			function calculateDiscountedAmount() {
+				// Get the values from the 'price' and 'discount' fields
+				const price = parseFloat(document.getElementById('price').value);
+				const discount = parseFloat(document.getElementById('discount').value);
+
+				// Log the price and discount for debugging
+				console.log("Price: " + price, "Discount: " + discount);
+
+				// Check if both price and discount are valid numbers and greater than 0
+				if (!isNaN(price) && !isNaN(discount) && price > 0 && discount >= 0) {
+					const discountedAmount = price - (price * discount / 100); // Calculate discounted amount
+					console.log("Discounted Amount: " + discountedAmount); // Log the calculated discounted amount
+					document.getElementById('discountedAmount').value = discountedAmount.toFixed(2); // Set value in the discountedAmount field
+				} else {
+					document.getElementById('discountedAmount').value = ''; // Clear the discounted amount if values are invalid
+				}
+			}
+
+			// Wait for the DOM to fully load before attaching event listeners
+			document.addEventListener('DOMContentLoaded', function () {
+				// Get the 'price' and 'discount' input elements
+				const priceInput = document.getElementById('price');
+				const discountInput = document.getElementById('discount');
+
+				// Add 'input' event listeners to trigger calculation when user types
+				priceInput.addEventListener('input', calculateDiscountedAmount);
+				discountInput.addEventListener('input', calculateDiscountedAmount);
+			});
+		</script>
+	</section>
+</body>
+
+</html>

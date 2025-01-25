@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My Spring App</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<style>
+		.bg-primary {
+			background-color: #007bff !important;
+		}
+
+		.category-card {
+			border: none;
+			background-color: #f8f9fa;
+		}
+
+		.product-card {
+			transition: transform 0.2s;
+		}
+
+		.product-card:hover {
+			transform: scale(1.05);
+		}
+
+		.text-muted {
+			text-decoration: line-through;
+		}
+
+		.search-bar {
+			background: #ffffff;
+			box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+			border-radius: 50px;
+			overflow: hidden;
+		}
+
+		.search-input {
+			border: none;
+			box-shadow: none;
+		}
+
+		.search-input:focus {
+			outline: none;
+			box-shadow: none;
+		}
+	</style>
+</head>
+
+<body>
+	<section>
+		<!-- Search Bar -->
+		<div class="container-fluid bg-primary mt-5 p-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<form>
+						<div class="input-group search-bar">
+							<input type="text" class="form-control search-input" name="ch"
+								placeholder="Search for products...">
+							<button class="btn btn-light text-dark"><i class="fa-solid fa-magnifying-glass"></i>
+								Search</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Categories and Products -->
+		<div class="container-fluid mt-4 mb-4">
+			<div class="row">
+				<!-- Categories Sidebar -->
+				<div class="col-md-3">
+					<div class="card category-card shadow-sm p-3 mb-4 rounded">
+						<div class="card-header bg-white text-center">
+							<h5 class="fw-bold">Categories</h5>
+						</div>
+						<div class="card-body">
+							<div class="list-group">
+								<a href="/products" th:classappend="${paramValue==''}? 'active':''"
+									class="list-group-item list-group-item-action" aria-current="true">
+									All
+								</a>
+								<a th:each="c:${categories}" th:href="@{'/products?category='+${c.name}}"
+									th:classappend="${paramValue==c.name}? 'active':''"
+									class="list-group-item list-group-item-action">
+									[[${c.name}]]
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Products Section -->
+				<div class="col-md-9">
+					<div class="card shadow-sm p-4 mb-4 rounded">
+						<div class="card-header bg-white text-center">
+							<h3 class="fw-bold">Products</h3>
+						</div>
+						<th:block th:if="${products.size>0}">
+							<div class="card-body">
+								<div class="row g-4">
+									<!-- Product Card -->
+									<div class="col-md-4" th:each="p:${products}">
+										<div class="card product-card shadow-sm">
+											<img alt="" th:src="@{'/img/'+${p.image}}" class="card-img-top img-fluid"
+												style="height: 250px; object-fit: cover;">
+											<div class="card-body">
+												<p class="fs-6 text-center text-secondary mb-2">[[${p.title}]]</p>
+												<div class="text-center">
+													<p class="fs-6 fw-bold">
+														<span class="text-success ms-2">&#8377;
+															[[${p.discountPrice}]]</span><br>
+														<span class="text-decoration-line-through text-muted">&#8377;
+															[[${p.price}]]</span>
+														<span class="fs-6 text-success ms-2">([[${p.discount}]]%
+															off)</span>
+													</p>
+												</div>
+												<div class="text-center">
+													<a th:href="@{'/viewProduct/'+${p.id}}"
+														class="btn btn-outline-primary w-100">View
+														Details</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- End Product Card -->
+								</div>
+							</div>
+						</th:block>
+						<th:block th:unless="${products.size>0}">
+							<p class="fs-4 text-center text-danger p-5">Product are not Availbale</p>
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>
