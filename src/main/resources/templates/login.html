@@ -20,12 +20,14 @@
 							<p class="fs-4 text-center">
 								Login
 							</p>
+							<div th:if="${param.error}" class="alert alert-danger">Invalid Email & Password</div>
+							<div th:if="${param.logout}" class="alert alert-success">Successfully Logout</div>
 						</div>
 						<div class="card-body">
-							<form>
+							<form action="/login" method="post">
 								<div class="mb-3">
 									<label class="form-label">Email</label>
-									<input class="form-control" name="email" type="email">
+									<input class="form-control" name="username" type="email">
 								</div>
 								<div class="mb-3">
 									<label class="form-label">Password</label>

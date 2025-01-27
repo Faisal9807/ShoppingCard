@@ -1,0 +1,13 @@
+package com.ecom.repository;
+
+import com.ecom.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepository extends JpaRepository<User,Integer> {
+
+    public User findByEmail(String email);
+
+}

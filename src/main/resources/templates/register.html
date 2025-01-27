@@ -16,17 +16,23 @@
 				</div>
 				<div class="col-md-6 mt-3 p-5">
 					<div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
-						<div class="card-header">
-							<p class="fs-4 text-center">
-								Register
-							</p>
+						<div class="card-header text-center">
+							<p class="fs-4">Register</p>
+							<th:block th:if="${session.succMsg}">
+								<p class="text-success fw-bold">[[${session.succMsg}]]</p>
+								<th:block th:text="${@commonServiceImp.removeSession()}"></th:block>
+							</th:block>
+							<th:block th:if="${session.errorMsg}">
+								<p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
+								<th:block th:text="${@commonServiceImp.removeSession()}"></th:block>
+							</th:block>
 						</div>
 						<div class="card-body">
-							<form>
+							<form action="/saveUser" enctype="multipart/form-data" method="post">
 								<div class="row">
 									<div class="col">
 										<label class="form-label">Full Name</label> <input required class="form-control"
-											name="name" type="text">
+										   requierd	name="name" type="text">
 									</div>
 
 									<div class="col">
@@ -63,7 +69,7 @@
 
 									<div class="col">
 										<label class="form-label">Pincode</label> <input required class="form-control"
-											name="pincode" type="number">
+											name="pinCode" type="number">
 									</div>
 
 								</div>
