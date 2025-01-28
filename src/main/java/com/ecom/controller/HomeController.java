@@ -1,5 +1,6 @@
 package com.ecom.controller;
 
+import com.ecom.model.Category;
 import com.ecom.model.User;
 import com.ecom.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +21,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
+import java.util.List;
 
 
 @Controller
@@ -33,6 +36,17 @@ public class HomeController {
 	
 	@Autowired
 	private UserService userService;
+
+
+	@ModelAttribute
+	public void getUserDetails(Principal p , Model model){
+		if(p!=null){
+            User user=userService.findByEmail(p.getName());
+            model.addAttribute("user",user);
+        }
+		List<Category> categories=categoryService.getAllActiveCategory();
+		model.addAttribute("category",categories);
+	}
 
 	@GetMapping("/")
 	public String index() {
@@ -51,6 +65,7 @@ public class HomeController {
 
 	@GetMapping("/products")
 	public String products(Model m,@RequestParam(value="category",defaultValue = "") String category) {
+		m.addAttribute("page", "products");
 		m.addAttribute("categories",categoryService.getAllActiveCategory());
 		m.addAttribute("products",productService.getAllActiveProduct(category));
 		m.addAttribute("paramValue",category);
@@ -82,4 +97,5 @@ public class HomeController {
 		}
 		return "redirect:/register";
 	}
+
 }

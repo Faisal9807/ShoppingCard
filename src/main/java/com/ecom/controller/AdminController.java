@@ -6,8 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.List;
 
+import com.ecom.model.User;
+import com.ecom.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -33,10 +36,24 @@ import jakarta.servlet.http.HttpSession;
 public class AdminController {
 
 	@Autowired
+    private UserService userService;
+
+	@Autowired
 	private CategoryService categoryService;
 
 	@Autowired
 	private ProductService productService;
+
+
+	@ModelAttribute
+	public void getUserDetails(Principal p , Model model){
+		if(p!=null){
+			User user=userService.findByEmail(p.getName());
+			model.addAttribute("user",user);
+		}
+		List<Category> categories=categoryService.getAllActiveCategory();
+		model.addAttribute("category",categories);
+	}
 
 	@GetMapping("/")
 	public String index() {

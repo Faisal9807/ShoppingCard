@@ -5,3 +5,105 @@
 .cat-div{
 	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 }
+
+// for base html
+
+/* Navbar Styling */
+.navbar {
+    background-color: #007bff; /* Primary color background (e.g., blue) */
+    padding: 1rem 2rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation List */
+.nav-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.5rem;
+}
+
+/* Navigation Links */
+.nav-link {
+    display: flex;
+    align-items: center;
+    color: #ffffff; /* Text color for contrast on primary background */
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Icons inside Links */
+.nav-link i {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    color: #ffffff; /* Icon color */
+}
+
+/* Hover Effects */
+.nav-link:hover {
+    color: #f8f9fa; /* Slightly lighter text on hover */
+    transform: translateY(-2px);
+}
+
+/* User Link Specific Styles */
+.nav-link.user-link span {
+    font-weight: 600;
+}
+
+/* Logout Link Specific Styles */
+.nav-link.logout-link span {
+    color: #f8f9fa; /* Keeps text visible against the primary background */
+    font-weight: 600;
+}
+
+.nav-link.logout-link:hover span {
+    color: #e0e0e0; /* Slightly darker hover effect */
+}
+// for drop menu
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+    background-color: #ffffff; /* White background for the menu */
+    border: 1px solid #ddd; /* Light border for subtle separation */
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a floating effect */
+}
+
+/* Dropdown Item Styling */
+.dropdown-item {
+    color: #333333; /* Neutral text color */
+    font-size: 0.95rem; /* Slightly smaller text for compact design */
+    padding: 0.5rem 1rem; /* Comfortable padding */
+    transition: all 0.3s ease; /* Smooth transitions for hover effects */
+    display: flex;
+    align-items: center; /* Center align text and icons (if any) */
+    border-radius: 0.25rem; /* Rounded corners for items */
+}
+
+/* Hover Effect */
+.dropdown-item:hover {
+    background-color: #007bff; /* Primary color background */
+    color: #ffffff; /* White text on hover */
+    transform: translateX(5px); /* Subtle slide effect */
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for a lifted effect */
+}
+
+/* Active Item Styling (Optional) */
+.dropdown-item.active {
+    background-color: #0056b3; /* Darker primary color for active item */
+    color: #ffffff; /* White text */
+}
+.dropdown-item i {
+    margin-right: 0.5rem; /* Space between icon and text */
+    color: #007bff; /* Icon matches the theme */
+    transition: color 0.3s ease;
+}
+
+.dropdown-item:hover i {
+    color: #ffffff; /* White icon on hover */
+}
