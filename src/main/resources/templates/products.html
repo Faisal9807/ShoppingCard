@@ -129,8 +129,16 @@
 								</div>
 							</div>
 						</th:block>
-						<th:block th:unless="${products.size>0}">
-							<p class="fs-4 text-center text-danger p-5">Product are not Availbale</p>
+						<th:block th:unless="${products.size() > 0}">
+							<p class="fs-4 text-center text-danger">
+								<img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/oops.png" alt="oops"/>Ops!
+							</p><br>
+							<p class="fs-4 text-center text-danger">
+								<span th:each="c : ${categories}" th:if="${c.name == paramValue}">
+									[[${c.name}]]
+								</span>
+								products are not available.
+							</p>
 						</th:block>
 					</div>
 				</div>
