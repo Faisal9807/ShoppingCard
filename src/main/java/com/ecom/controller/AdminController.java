@@ -16,12 +16,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ecom.model.Category;
@@ -230,5 +225,24 @@ public class AdminController {
 		}
 
 		return "redirect:/admin/editProduct/" + product.getId();
+	}
+
+	@GetMapping("/loadUsers")
+    public String loadUsers(Model m) {
+		List<User> users=userService.getAllUsers("ROLE_USER");
+        m.addAttribute("users", users);
+        return "admin/users";
+    }
+
+	@GetMapping("/updateUserAccountStatus")
+    public String updateUserAccountStatus(@RequestParam int id, @RequestParam boolean status,HttpSession session) {
+		boolean s=userService.updateStatus(id, status);
+		if(s){
+			session.setAttribute("succMsg", "Successfully updated");
+		}
+		else{
+			session.setAttribute("errorMsg", "Failed to update");
+		}
+		return "redirect:/admin/loadUsers";
 	}
 }
