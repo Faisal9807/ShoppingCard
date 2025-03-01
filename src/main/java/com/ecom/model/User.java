@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -29,5 +31,10 @@ public class User {
     private String profileImage;
     private String role;
     private boolean isEnabled;
+
+    // For locked account after trying multiple times to access
+    private boolean accountNonLocked;
+    private Integer failedAttempt;
+    private Date lockTime;
 
 }
