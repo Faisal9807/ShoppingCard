@@ -89,4 +89,22 @@ public class UserServiceImp implements UserService {
 
     }
 
+    @Override
+    public void updateUserResetToken(String email, String resetToken) {
+        User user=userRepository.findByEmail(email);
+        user.setResetToken(resetToken);
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public User findByResetToken(String token) {
+        return userRepository.findByResetToken(token);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
 }
